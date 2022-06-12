@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/freeksa/Documenten/medication_app/medication_app/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
+            "outputFile": "/home/freeksa/Documenten/medication_app/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
             "map": [
                 {
-                    "source": "/home/freeksa/Documenten/medication_app/medication_app/android/app/src/main/res/values/styles.xml",
+                    "source": "/home/freeksa/Documenten/medication_app/android/app/src/main/res/values/styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",

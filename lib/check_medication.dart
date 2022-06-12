@@ -33,7 +33,7 @@ class CheckMedication extends State<CheckMedicationPage> {
               } else {
                 return Column(
                   children: [
-                    /*  Container(
+                    Container(
                       height: 100,
                       child: Center(
                         child: ElevatedButton(
@@ -46,7 +46,7 @@ class CheckMedication extends State<CheckMedicationPage> {
                         ),
                       ),
                     ),
-                    */
+
                     Expanded(
                       child: Visibility(
                         child: Row(
@@ -55,6 +55,8 @@ class CheckMedication extends State<CheckMedicationPage> {
                             Visibility(
                               visible: snapshot.data!
                                       .where((x) =>
+                                          DateTime.parse(x.date).day ==
+                                              DateTime.now().day &&
                                           DateTime.parse(x.date).hour < 12)
                                       .isEmpty
                                   ? true
@@ -67,9 +69,7 @@ class CheckMedication extends State<CheckMedicationPage> {
                                       check = MedicationTaken(
                                           id: uuid.v4(),
                                           taken: 1,
-                                          date: DateTime.now()
-                                              .add(Duration(hours: -12))
-                                              .toString());
+                                          date: DateTime.now().toString());
                                       if (check != null) {
                                         CreateDatabase.instance
                                             .AddMedicationTakenLog(check);
@@ -84,6 +84,8 @@ class CheckMedication extends State<CheckMedicationPage> {
                             Visibility(
                               visible: snapshot.data!
                                       .where((x) =>
+                                          DateTime.parse(x.date).day ==
+                                              DateTime.now().day &&
                                           DateTime.parse(x.date).hour > 12)
                                       .isEmpty
                                   ? true

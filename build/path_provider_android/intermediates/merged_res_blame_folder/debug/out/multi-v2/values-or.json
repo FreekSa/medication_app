@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/home/freeksa/Documenten/medication_app/medication_app/build/path_provider_android/intermediates/res/merged/debug/values-or/values-or.xml",
+            "outputFile": "/home/freeksa/Documenten/medication_app/build/path_provider_android/intermediates/incremental/mergeDebugResources/merged.dir/values-or/values-or.xml",
             "map": [
                 {
                     "source": "/home/freeksa/.gradle/caches/transforms-2/files-2.1/5f663b08eec19eef9a9d1af662d9025e/core-1.6.0/res/values-or/values-or.xml",
@@ -16,7 +16,7 @@
             ]
         },
         {
-            "outputFile": "/home/freeksa/Documenten/medication_app/medication_app/build/path_provider_android/intermediates/incremental/mergeDebugResources/merged.dir/values-or/values-or.xml",
+            "outputFile": "/home/freeksa/Documenten/medication_app/build/path_provider_android/intermediates/res/merged/debug/values-or/values-or.xml",
             "map": [
                 {
                     "source": "/home/freeksa/.gradle/caches/transforms-2/files-2.1/5f663b08eec19eef9a9d1af662d9025e/core-1.6.0/res/values-or/values-or.xml",
