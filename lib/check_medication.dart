@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:medication_app/main.dart';
 import 'package:medication_app/models/medicationTaken.dart';
 import 'package:medication_app/services.dart';
+import 'package:path/path.dart';
 import 'package:uuid/uuid.dart';
 
 class CheckMedicationPage extends StatefulWidget {
@@ -12,7 +13,8 @@ class CheckMedicationPage extends StatefulWidget {
 }
 
 class CheckMedication extends State<CheckMedicationPage> {
-  MedicationTaken check = MedicationTaken(id: "", taken: 1, date: "");
+  MedicationTaken check = MedicationTaken(
+      id: "", taken: 1, type: Types.Morning.toString(), date: "");
   List<MedicationTaken> checks = <MedicationTaken>[];
   List<MedicationTaken> filteredList = <MedicationTaken>[];
 
@@ -33,6 +35,7 @@ class CheckMedication extends State<CheckMedicationPage> {
               } else {
                 return Column(
                   children: [
+                    /*
                     Container(
                       height: 100,
                       child: Center(
@@ -46,7 +49,12 @@ class CheckMedication extends State<CheckMedicationPage> {
                         ),
                       ),
                     ),
-
+*/
+                    Container(
+                      margin: EdgeInsets.only(top: 100.0),
+                      child: Text(
+                          "${DateTime.now().hour}:${DateTime.now().minute < 10 ? "0${DateTime.now().minute}" : "${DateTime.now().minute}"} \t ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}"),
+                    ),
                     Expanded(
                       child: Visibility(
                         child: Row(
@@ -69,6 +77,7 @@ class CheckMedication extends State<CheckMedicationPage> {
                                       check = MedicationTaken(
                                           id: uuid.v4(),
                                           taken: 1,
+                                          type: Types.Morning.toString(),
                                           date: DateTime.now().toString());
                                       if (check != null) {
                                         CreateDatabase.instance
@@ -80,6 +89,9 @@ class CheckMedication extends State<CheckMedicationPage> {
                                   child: const Text("Morning meds taken"),
                                 ),
                               ),
+                            ),
+                            Container(
+                              width: 10,
                             ),
                             Visibility(
                               visible: snapshot.data!
@@ -103,6 +115,7 @@ class CheckMedication extends State<CheckMedicationPage> {
                                         check = MedicationTaken(
                                             id: uuid.v4(),
                                             taken: 1,
+                                            type: Types.Evening.toString(),
                                             date: DateTime.now().toString());
                                         if (check.id.isNotEmpty) {
                                           CreateDatabase.instance

@@ -35,6 +35,7 @@ class CreateDatabase {
       CREATE TABLE logsMedicationTaken(
           id TEXT PRIMARY KEY,
           taken INT,
+          type TEXT,
           date TEXT
       );
       ''');
