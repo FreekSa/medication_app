@@ -31,25 +31,48 @@ class CheckMedication extends State<CheckMedicationPage> {
                               DateTime.parse(x.date).day == DateTime.now().day)
                           .length >=
                       2) {
-                return Center(child: Text('Medication taken for today'));
+                return Column(children: [
+                  // Container(
+                  //   height: 100,
+                  //   color: Colors.red,
+                  //   child: Center(
+                  //     child: ElevatedButton(
+                  //       onPressed: () {
+                  //         for (var item in snapshot.data!) {
+                  //           print(item.id +
+                  //               "  " +
+                  //               item.date +
+                  //               "  " +
+                  //               item.type.toString());
+                  //         }
+                  //       },
+                  //       child: const Text("Show data in database"),
+                  //     ),
+                  //   ),
+                  // ),
+                  Center(child: Text('Medication taken for today'))
+                ]);
               } else {
                 return Column(
                   children: [
-                    /*
-                    Container(
-                      height: 100,
-                      child: Center(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            for (var item in snapshot.data!) {
-                              print(item.id + "  " + item.date);
-                            }
-                          },
-                          child: const Text("Show data in database"),
-                        ),
-                      ),
-                    ),
-*/
+                    // Container(
+                    //   height: 100,
+                    //   color: Colors.red,
+                    //   child: Center(
+                    //     child: ElevatedButton(
+                    //       onPressed: () {
+                    //         for (var item in snapshot.data!) {
+                    //           print(item.id +
+                    //               "  " +
+                    //               item.date +
+                    //               "  " +
+                    //               item.type.toString());
+                    //         }
+                    //       },
+                    //       child: const Text("Show data in database"),
+                    //     ),
+                    //   ),
+                    // ),
                     Container(
                       margin: EdgeInsets.only(top: 100.0),
                       child: Text(
@@ -65,7 +88,7 @@ class CheckMedication extends State<CheckMedicationPage> {
                                       .where((x) =>
                                           DateTime.parse(x.date).day ==
                                               DateTime.now().day &&
-                                          DateTime.parse(x.date).hour < 12)
+                                          x.type == Types.Morning.toString())
                                       .isEmpty
                                   ? true
                                   : false,
@@ -98,7 +121,7 @@ class CheckMedication extends State<CheckMedicationPage> {
                                       .where((x) =>
                                           DateTime.parse(x.date).day ==
                                               DateTime.now().day &&
-                                          DateTime.parse(x.date).hour > 12)
+                                          x.type == Types.Evening.toString())
                                       .isEmpty
                                   ? true
                                   : false,
@@ -132,19 +155,6 @@ class CheckMedication extends State<CheckMedicationPage> {
                         ),
                       ),
                     ),
-                    // Expanded(
-                    //     child: Center(
-                    //         child: Visibility(
-                    //   visible: snapshot.data!
-                    //               .where((x) =>
-                    //                   DateTime.parse(x.date).day ==
-                    //                   DateTime.now().day)
-                    //               .length >=
-                    //           2
-                    //       ? true
-                    //       : false,
-                    //   child: Text("All medications taken for today."),
-                    // )))
                   ],
                 );
               }

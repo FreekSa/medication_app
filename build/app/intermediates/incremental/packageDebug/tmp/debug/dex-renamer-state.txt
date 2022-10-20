@@ -1,4 +1,4 @@
-#Fri Jun 17 14:02:52 CEST 2022
-base.0=/home/freeksa/Documenten/medication_app/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+#Thu Oct 20 20:31:58 CEST 2022
+base.0=D\:\\Programming\\flutter\\medication_app\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 renamed.0=classes.dex
 path.0=classes.dex
