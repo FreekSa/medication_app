@@ -55,24 +55,24 @@ class CheckMedication extends State<CheckMedicationPage> {
               } else {
                 return Column(
                   children: [
-                    // Container(
-                    //   height: 100,
-                    //   color: Colors.red,
-                    //   child: Center(
-                    //     child: ElevatedButton(
-                    //       onPressed: () {
-                    //         for (var item in snapshot.data!) {
-                    //           print(item.id +
-                    //               "  " +
-                    //               item.date +
-                    //               "  " +
-                    //               item.type.toString());
-                    //         }
-                    //       },
-                    //       child: const Text("Show data in database"),
-                    //     ),
-                    //   ),
-                    // ),
+                    Container(
+                      height: 100,
+                      color: Colors.red,
+                      child: Center(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            for (var item in snapshot.data!) {
+                              print(item.id +
+                                  "  " +
+                                  item.date +
+                                  "  " +
+                                  item.type.toString());
+                            }
+                          },
+                          child: const Text("Show data in database"),
+                        ),
+                      ),
+                    ),
                     Container(
                       margin: EdgeInsets.only(top: 100.0),
                       child: Text(
