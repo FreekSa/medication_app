@@ -233,7 +233,6 @@ class AddOrEditLog extends State<AddOrEditLogWidget> {
                                 pickedTime.minute);
                           }
                           ;
-                          print(time);
                         });
                       });
                     }),

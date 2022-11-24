@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medication_app/models/medicationTaken.dart';
 import 'package:medication_app/services.dart';
+import 'package:intl/intl.dart';
 
 class LogsMedicationPage extends StatefulWidget {
   const LogsMedicationPage({Key? key}) : super(key: key);
@@ -33,12 +34,17 @@ class LogsMedication extends State<LogsMedicationPage> {
                         List<MedicationTaken> logs = snapshot.data!.toList();
                         return ListTileTheme(
                             child: ListView(
-                          children: snapshot.data!.map((log) {
+                          children: logs.map((log) {
                             return Center(
                                 child: Card(
                                     child: Column(
                               children: <Widget>[
-                                ListTile(title: Text(log.date))
+                                ListTile(
+                                    leading: Icon(Icons.medication),
+                                    title: Text(
+                                        DateFormat("dd-MM-yyyy HH:mm:ss")
+                                            .format(DateTime.parse(log.date))),
+                                    subtitle: Text(log.type.toString()))
                               ],
                             )));
                           }).toList(),

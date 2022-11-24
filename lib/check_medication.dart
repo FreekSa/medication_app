@@ -25,36 +25,45 @@ class CheckMedication extends State<CheckMedicationPage> {
             future: CreateDatabase.instance.GetMedicationTakenLogs(),
             builder: (BuildContext context,
                 AsyncSnapshot<List<MedicationTaken>> snapshot) {
-              if (snapshot.data == null ||
+              //           print(snapshot.data);
+              if (snapshot.data == null) {
+                AskMedication(true, true);
+              } else if (snapshot.data!
+                      .where((x) =>
+                          DateTime.parse(x.date).day == DateTime.now().day)
+                      .length <
+                  2) {
+                print(snapshot.data!
+                    .where((x) =>
+                        DateTime.parse(x.date).day == DateTime.now().day &&
+                        x.type == Types.Morning.toString())
+                    .isEmpty);
+                AskMedication(
                   snapshot.data!
                           .where((x) =>
-                              DateTime.parse(x.date).day == DateTime.now().day)
-                          .length >=
-                      2) {
-                return Column(children: [
-                  // Container(
-                  //   height: 100,
-                  //   color: Colors.red,
-                  //   child: Center(
-                  //     child: ElevatedButton(
-                  //       onPressed: () {
-                  //         for (var item in snapshot.data!) {
-                  //           print(item.id +
-                  //               "  " +
-                  //               item.date +
-                  //               "  " +
-                  //               item.type.toString());
-                  //         }
-                  //       },
-                  //       child: const Text("Show data in database"),
-                  //     ),
-                  //   ),
-                  // ),
-                  Center(child: Text('Medication taken for today'))
-                ]);
+                              DateTime.parse(x.date).day ==
+                                  DateTime.now().day &&
+                              x.type == Types.Morning.toString())
+                          .isEmpty
+                      ? true
+                      : false,
+                  snapshot.data!
+                          .where((x) =>
+                              DateTime.parse(x.date).day ==
+                                  DateTime.now().day &&
+                              x.type == Types.Evening.toString())
+                          .isEmpty
+                      ? true
+                      : false,
+                );
               } else {
-                return Column(
-                  children: [
+                List<MedicationTaken> logs = snapshot.data!.toList();
+                if (logs
+                        .where((x) =>
+                            DateTime.parse(x.date).day == DateTime.now().day)
+                        .length >=
+                    2) {
+                  return Column(children: [
                     Container(
                       height: 100,
                       color: Colors.red,
@@ -73,104 +82,97 @@ class CheckMedication extends State<CheckMedicationPage> {
                         ),
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(top: 100.0),
-                      child: Text(
-                          "${DateTime.now().hour}:${DateTime.now().minute < 10 ? "0${DateTime.now().minute}" : "${DateTime.now().minute}"} \t ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}"),
-                    ),
-                    Expanded(
-                      child: Visibility(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Visibility(
-                              visible: snapshot.data!
-                                      .where((x) =>
-                                          DateTime.parse(x.date).day ==
-                                              DateTime.now().day &&
-                                          x.type == Types.Morning.toString())
-                                      .isEmpty
-                                  ? true
-                                  : false,
-                              child: Center(
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      var uuid = Uuid();
-                                      check = MedicationTaken(
-                                          id: uuid.v4(),
-                                          taken: 1,
-                                          type: Types.Morning.toString(),
-                                          date: DateTime.now().toString());
-                                      if (check != null) {
-                                        CreateDatabase.instance
-                                            .AddMedicationTakenLog(check);
-                                        print("data added");
-                                      }
-                                    });
-                                  },
-                                  child: const Text("Morning meds taken"),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: 10,
-                            ),
-                            Visibility(
-                              visible: snapshot.data!
-                                      .where((x) =>
-                                          DateTime.parse(x.date).day ==
-                                              DateTime.now().day &&
-                                          x.type == Types.Evening.toString())
-                                      .isEmpty
-                                  ? true
-                                  : false,
-                              child: Center(
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      var filteredList = snapshot.data!.where(
-                                          (x) =>
-                                              DateTime.parse(x.date).day ==
-                                              DateTime.now().day);
-                                      if (filteredList.isNotEmpty) {
-                                        var uuid = Uuid();
-                                        check = MedicationTaken(
-                                            id: uuid.v4(),
-                                            taken: 1,
-                                            type: Types.Evening.toString(),
-                                            date: DateTime.now().toString());
-                                        if (check.id.isNotEmpty) {
-                                          CreateDatabase.instance
-                                              .AddMedicationTakenLog(check);
-                                        }
-                                      }
-                                    });
-                                  },
-                                  child: const Text("Evening meds taken"),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                );
+                    Center(child: Text('Medication taken for today'))
+                  ]);
+                }
               }
+              print("nu ben ik hier");
+              return AskMedication(true, true); //null safety
             }));
   }
 
-  Future<bool> CheckIfMedsTakenToday() async {
-    List<MedicationTaken> list =
-        await CreateDatabase.instance.GetMedicationTakenLogs();
-    if (list
-            .where((x) => DateTime.parse(x.date).day == DateTime.now().day)
-            .length >
-        2) {
-      return false;
-    } else {
-      return true;
-    }
+  Widget AskMedication(
+    bool morning,
+    bool evening,
+  ) {
+    return Column(
+      children: [
+        Container(
+          margin: EdgeInsets.only(top: 100.0),
+          child: Text(
+              "${DateTime.now().hour}:${DateTime.now().minute < 10 ? "0${DateTime.now().minute}" : "${DateTime.now().minute}"} \t ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}"),
+        ),
+        Center(
+          child: TextButton(
+            child: Text("toon iets"),
+            onPressed: () {
+              print(morning);
+              print(evening);
+              ;
+            },
+          ),
+        ),
+        Expanded(
+          child: Visibility(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Visibility(
+                  visible: morning,
+                  child: Center(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          var uuid = Uuid();
+                          check = MedicationTaken(
+                              id: uuid.v4(),
+                              taken: 1,
+                              type: Types.Morning.toString(),
+                              date: DateTime.now().toString());
+                          if (check != null) {
+                            CreateDatabase.instance
+                                .AddMedicationTakenLog(check);
+                            print("data added");
+                            AskMedication(false, evening);
+                          }
+                        });
+                      },
+                      child: const Text("Morning meds taken"),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 10,
+                ),
+                Visibility(
+                  visible: evening,
+                  child: Center(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          var uuid = Uuid();
+                          check = MedicationTaken(
+                              id: uuid.v4(),
+                              taken: 1,
+                              type: Types.Evening.toString(),
+                              date: DateTime.now().toString());
+                          if (check != null) {
+                            CreateDatabase.instance
+                                .AddMedicationTakenLog(check);
+                            print("data added");
+                            AskMedication(morning, false);
+                          }
+                        });
+                      },
+                      child: const Text("Evening meds taken"),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
