@@ -26,43 +26,51 @@ class CheckMedication extends State<CheckMedicationPage> {
             builder: (BuildContext context,
                 AsyncSnapshot<List<MedicationTaken>> snapshot) {
               //           print(snapshot.data);
-              if (snapshot.data == null) {
-                AskMedication(true, true);
-              } else if (snapshot.data!
+              bool morning = true;
+              bool evening = true;
+              if (snapshot.hasData) {
+                print(snapshot.data);
+                if (snapshot.data!
+                        .where((x) =>
+                            DateTime.parse(x.date).day == DateTime.now().day)
+                        .length <
+                    2) {
+                  print(snapshot.data!
                       .where((x) =>
-                          DateTime.parse(x.date).day == DateTime.now().day)
-                      .length <
-                  2) {
-                print(snapshot.data!
-                    .where((x) =>
-                        DateTime.parse(x.date).day == DateTime.now().day &&
-                        x.type == Types.Morning.toString())
-                    .isEmpty);
-                AskMedication(
-                  snapshot.data!
+                          DateTime.parse(x.date).day == DateTime.now().day &&
+                          x.type == Types.Morning.toString())
+                      .isEmpty);
+                  print("nog geen 2x medicatie genomen");
+                  print(snapshot.data!
                           .where((x) =>
                               DateTime.parse(x.date).day ==
                                   DateTime.now().day &&
                               x.type == Types.Morning.toString())
                           .isEmpty
                       ? true
-                      : false,
-                  snapshot.data!
+                      : false);
+                  morning = snapshot.data!
+                          .where((x) =>
+                              DateTime.parse(x.date).day ==
+                                  DateTime.now().day &&
+                              x.type == Types.Morning.toString())
+                          .isEmpty
+                      ? true
+                      : false;
+                  evening = snapshot.data!
                           .where((x) =>
                               DateTime.parse(x.date).day ==
                                   DateTime.now().day &&
                               x.type == Types.Evening.toString())
                           .isEmpty
                       ? true
-                      : false,
-                );
-              } else {
-                List<MedicationTaken> logs = snapshot.data!.toList();
-                if (logs
+                      : false;
+                } else if (snapshot.data!
                         .where((x) =>
                             DateTime.parse(x.date).day == DateTime.now().day)
                         .length >=
                     2) {
+                  List<MedicationTaken> logs = snapshot.data!.toList();
                   return Column(children: [
                     Container(
                       height: 100,
@@ -85,9 +93,10 @@ class CheckMedication extends State<CheckMedicationPage> {
                     Center(child: Text('Medication taken for today'))
                   ]);
                 }
+                //    print("null safety");
               }
-              print("nu ben ik hier");
-              return AskMedication(true, true); //null safety
+              return AskMedication(morning, evening);
+              // return this widget
             }));
   }
 
@@ -133,7 +142,7 @@ class CheckMedication extends State<CheckMedicationPage> {
                             CreateDatabase.instance
                                 .AddMedicationTakenLog(check);
                             print("data added");
-                            AskMedication(false, evening);
+                            morning = false;
                           }
                         });
                       },
@@ -160,7 +169,7 @@ class CheckMedication extends State<CheckMedicationPage> {
                             CreateDatabase.instance
                                 .AddMedicationTakenLog(check);
                             print("data added");
-                            AskMedication(morning, false);
+                            evening = false;
                           }
                         });
                       },
