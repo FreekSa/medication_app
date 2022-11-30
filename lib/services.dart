@@ -85,4 +85,10 @@ class CreateDatabase {
     Database db = await instance.database;
     return await db.insert('logsMedicationTaken', taken.toMap());
   }
+
+  Future<int> RemoveMedicationTakenLog(String id) async {
+    Database db = await instance.database;
+    return await db
+        .delete('logsMedicationTaken', where: 'id = ?', whereArgs: [id]);
+  }
 }
